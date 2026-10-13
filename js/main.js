@@ -1,22 +1,26 @@
 (function () {
   const D = window.DATA, $ = (id) => document.getElementById(id);
   const UI = {
-    en: { skip: "Skip to content", welcome: "Welcome", course: "Engineering course", mobility: "International mobility",
-      civic: "Sustainability & civic engagement", sport: "Sport & activities", career: "Career development",
-      interests: "Interests", context: "Context", role: "Role", result: "Result", learned: "What I learned",
-      experiences: "Experiences", plans: "Potential projects", internships: "Internships & PEP", careerProject: "Career project",
-      cvs: "CVs", cvEn: "CV (English)", cvFr: "CV (French)", linkedin: "LinkedIn", video: "Elevator pitch",
-      videoNote: "2–3 minutes, in English: present, brief past, future.", roleModels: "Role models",
-      mobAligned: "Mobility projects aligned with my role models", path: "Path", takeaway: "What I take from it",
-      aligned: "Aligned with", view: "View project", more: "Learn more", portrait: "Portrait of " },
-    fr: { skip: "Aller au contenu", welcome: "Accueil", course: "Parcours ingénieur", mobility: "Mobilité internationale",
-      civic: "Développement durable & engagement citoyen", sport: "Sport & activités", career: "Développement de carrière",
-      interests: "Centres d'intérêt", context: "Contexte", role: "Rôle", result: "Résultat", learned: "Ce que j'ai appris",
-      experiences: "Expériences", plans: "Projets envisagés", internships: "Stages & PEP", careerProject: "Projet de carrière",
-      cvs: "CV", cvEn: "CV (anglais)", cvFr: "CV (français)", linkedin: "LinkedIn", video: "Elevator pitch",
-      videoNote: "2–3 minutes, en anglais : présent, passé très bref, futur.", roleModels: "Modèles de référence",
-      mobAligned: "Projets de mobilité alignés avec mes modèles", path: "Parcours", takeaway: "Ce que j'en retiens",
-      aligned: "Aligné avec", view: "Voir le projet", more: "En savoir plus", portrait: "Portrait de " }
+    en: { skip: "Skip to content", welcome: "Home", engineering: "Engineering", mobility: "Mobility", engagement: "Engagement",
+      activities: "Activities", career: "Career", contact: "Contact", other: "FR", otherLabel: "Version française",
+      engineeringSub: "Projects and skills from my engineering course.", mobilitySub: "Languages and international aspirations.",
+      engagementSub: "Sustainability, community and civic involvement.", activitiesSub: "Sport and passions outside engineering.",
+      careerSub: "Professional documents, goals and sources of inspiration.", contactSub: "Get in touch for an internship, a project or a simple chat.",
+      skills: "Skills", projects: "Projects", experiences: "Experiences", mobGoal: "Mobility project", cvEn: "Download CV (English)",
+      cvFr: "Download CV (French)", linkedin: "My LinkedIn profile", pastExp: "Past experience", roleModels: "Role models",
+      roleModelsSub: "Analysis of 3 inspiring profiles and 3 potential mobility projects.", mobProjects: "Potential mobility projects",
+      aligned: "Aligned with", pitch: "Elevator pitch", pitchSub: "2–3 minutes in English: present, brief past, future.",
+      result: "Result", learned: "What I learned", email: "Email", phone: "Phone", portrait: "Portrait of " },
+    fr: { skip: "Aller au contenu", welcome: "Accueil", engineering: "Ingénierie", mobility: "Mobilité", engagement: "Engagement",
+      activities: "Activités", career: "Carrière", contact: "Contact", other: "EN", otherLabel: "English version",
+      engineeringSub: "Projets et compétences de mon cursus ingénieur.", mobilitySub: "Langues et aspirations à l'international.",
+      engagementSub: "Développement durable, vie associative et citoyenne.", activitiesSub: "Sport et passions en dehors de l'ingénierie.",
+      careerSub: "Documents professionnels, objectifs et sources d'inspiration.", contactSub: "Écris-moi pour un stage, un projet ou un simple échange.",
+      skills: "Compétences", projects: "Projets", experiences: "Expériences", mobGoal: "Projet de mobilité", cvEn: "Télécharger le CV (anglais)",
+      cvFr: "Télécharger le CV (français)", linkedin: "Mon profil LinkedIn", pastExp: "Expériences passées", roleModels: "Modèles inspirants",
+      roleModelsSub: "Analyse de 3 profils inspirants et de 3 projets de mobilité potentiels.", mobProjects: "Projets de mobilité potentiels",
+      aligned: "Aligné avec", pitch: "Elevator pitch", pitchSub: "2–3 minutes en anglais : présent, passé très bref, futur.",
+      result: "Résultat", learned: "Ce que j'ai appris", email: "E-mail", phone: "Téléphone", portrait: "Portrait de " }
   };
   let lang = "en";
   try { lang = localStorage.getItem("lang") || (navigator.language || "en").slice(0, 2); } catch (e) { lang = (navigator.language || "en").slice(0, 2); }
@@ -30,58 +34,83 @@
     [].concat(kids).forEach((c) => c != null && c !== "" && n.append(c));
     return n;
   };
-  const link = (href, text) => href ? el("a", { href, target: "_blank", rel: "noopener" }, text) : null;
+  const a = (href, text, cls) => href ? el("a", { href, class: cls, target: "_blank", rel: "noopener" }, text) : null;
   const tags = (arr) => (arr && arr.length) ? el("ul", { class: "tags" }, arr.map((x) => el("li", {}, t(x)))) : null;
-  const facts = (rows) => { rows = rows.filter((r) => t(r[1])); return rows.length ? el("dl", { class: "facts" }, rows.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, t(v))])) : null; };
-  const entry = (meta, title, body) => el("article", { class: "entry" }, [el("p", { class: "meta" }, meta), el("div", {}, [el("h3", {}, title), ...body])]);
-  const simple = (o) => entry([t(o.period), t(o.place)].filter(Boolean).join(" – "), t(o.title),
-    [o.text ? el("p", {}, t(o.text)) : null, o.link ? el("p", {}, link(o.link, u("more"))) : null]);
-  const fill = (id, items, fn) => $(id).replaceChildren(...items.map(fn));
-  const panel = (title, meta, body) => el("article", { class: "panel" }, [el("h5", {}, title), meta ? el("p", { class: "muted" }, meta) : null, ...body]);
+  const list = (arr) => (arr && arr.length) ? el("ul", { class: "bullets" }, arr.map((x) => el("li", {}, t(x)))) : null;
+  const paras = (v) => v ? [].concat(v).map((x) => el("p", {}, t(x))) : [];
+  const head = (k) => [el("h2", { class: "title" }, u(k)), el("p", { class: "sub" }, u(k + "Sub"))];
+  const sub = (k) => el("h3", { class: "h3" }, u(k));
+  const grid = (cls, kids) => el("div", { class: cls }, kids);
+  const card = (kids, cls = "card") => el("article", { class: cls }, kids);
+  const body = (id, kids) => $(id).replaceChildren(...kids.flat().filter(Boolean));
+  const initials = (s) => s.replace(/[\[\]]/g, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
   function render() {
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach((n) => (n.textContent = u(n.dataset.i18n)));
-    document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
-    const p = D.profile, c = D.career;
+    const L = $("langbtn"); L.textContent = u("other"); L.setAttribute("aria-label", u("otherLabel"));
+    const p = D.profile, c = D.career, e = D.engineering, m = D.mobility;
     document.title = p.name + " – Portfolio";
-    $("brand").textContent = p.name; $("name").textContent = p.name;
-    $("role").textContent = t(p.title); $("pitch").textContent = t(p.pitch);
+    $("brand").textContent = p.name; $("pitch").textContent = t(p.pitch);
+    const [first, ...rest] = p.name.split(" ");
+    $("name").replaceChildren(el("span", {}, first), el("span", {}, rest.join(" ")));
+    $("highlights").replaceChildren(...p.highlights.map((h) => el("li", {}, t(h))));
+    $("links").replaceChildren(a(c.cv[lang], u(lang === "fr" ? "cvFr" : "cvEn"), "btn solid"), a(p.linkedin, "LinkedIn", "btn"), a(p.github, "GitHub", "btn"));
+    const img = el("img", { src: p.photo, alt: u("portrait") + p.name, class: "photo" });
+    img.onerror = () => $("photo-wrap").replaceChildren(el("div", { class: "photo avatar", "aria-hidden": "true" }, initials(p.name)));
+    $("photo-wrap").replaceChildren(img);
     $("foot").textContent = "© " + new Date().getFullYear() + " " + p.name;
 
-    const img = el("img", { id: "photo", src: p.photo, alt: u("portrait") + p.name, width: 176, height: 208 });
-    img.onerror = () => $("photo-wrap").replaceChildren(el("div", { class: "avatar", "aria-hidden": "true" }, p.name.split(" ").map((w) => w[0]).join("")));
-    $("photo-wrap").replaceChildren(img);
-    const social = () => [link(p.linkedin, "LinkedIn"), link(p.github, "GitHub")].filter(Boolean);
-    $("side-links").replaceChildren(...social());
-    $("links").replaceChildren(...social(), link(c.cv.en, u("cvEn")), link(c.cv.fr, u("cvFr")));
-    $("interests").replaceChildren(...p.interests.map((x) => el("li", {}, t(x))));
+    body("engineering-body", [head("engineering"), sub("skills"),
+      grid("grid3", e.skills.map((s) => card([el("h4", {}, t(s.group)), tags(s.items)]))), sub("projects"),
+      grid("grid2", e.projects.map((x) => card([
+        x.image ? el("img", { src: x.image, alt: "", class: "shot", loading: "lazy" }) : null,
+        el("div", { class: "pad" }, [el("p", { class: "meta" }, [t(x.type), t(x.period)].filter(Boolean).join(" · ")),
+          el("h4", {}, t(x.title)), ...paras(x.text),
+          x.result ? el("p", {}, [el("strong", {}, u("result") + ": "), t(x.result)]) : null,
+          x.learned ? el("p", {}, [el("strong", {}, u("learned") + ": "), t(x.learned)]) : null,
+          tags(x.tools), a(x.link, t(x.linkLabel), "btn")])])))]);
 
-    $("course-intro").textContent = t(D.course.intro);
-    fill("course-projects", D.course.projects, (x) => entry([t(x.type), t(x.period)].filter(Boolean).join(" – "), t(x.title), [
-      el("figure", {}, x.image ? el("img", { src: x.image, alt: "", loading: "lazy" }) : null),
-      facts([[u("context"), x.context], [u("role"), x.role], [u("result"), x.result], [u("learned"), x.learned]]),
-      tags(x.tools), x.link ? el("p", {}, link(x.link, u("view"))) : null]));
-    fill("mob-exp", D.mobility.experiences, simple); fill("mob-plans", D.mobility.plans, simple);
-    fill("civic-items", D.civic, simple); fill("sport-items", D.sport, simple); fill("career-exp", c.experiences, simple);
+    body("mobility-body", [head("mobility"),
+      grid("grid2", m.languages.map((l) => card([el("h4", {}, t(l.name)), el("p", { class: "level" }, t(l.level))]))),
+      sub("experiences"), ...m.experiences.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.period)), ...paras(x.text)])),
+      sub("mobGoal"), grid("prose", paras(m.text))]);
 
-    const cv = lang === "fr" ? c.cv.fr : c.cv.en;
-    $("cv-links").replaceChildren(link(c.cv.en, u("cvEn")), link(c.cv.fr, u("cvFr")));
-    $("cv-preview").src = cv;
-    $("li-links").replaceChildren(link(c.linkedin.en, "LinkedIn (EN)"), link(c.linkedin.fr, "LinkedIn (FR)"));
-    $("video-wrap").hidden = c.video.includes("[");
-    if (!$("video-wrap").hidden) $("video").src = c.video;
-    fill("role-models", c.roleModels, (r) => panel(r.name, t(r.job), [facts([[u("path"), r.path], [u("takeaway"), r.takeaway]]), tags(r.skills)]));
-    fill("career-mobility", c.mobilityProjects, (m) => panel(t(m.title), m.place, [facts([[u("aligned"), m.roleModel]]), m.text ? el("p", {}, t(m.text)) : null]));
+    body("engagement-body", [head("engagement"),
+      grid("grid2", D.engagement.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))]);
+
+    body("activities-body", [head("activities"), ...D.activities.map((g) => [sub2(t(g.category)),
+      grid("grid2", g.items.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))])]);
+    function sub2(txt) { return el("h3", { class: "h3" }, txt); }
+
+    body("career-body", [head("career"),
+      el("p", { class: "cta" }, [a(c.cv.en, u("cvEn"), "btn solid"), a(c.cv.fr, u("cvFr"), "btn dark"), a(p.linkedin, u("linkedin"), "btn")]),
+      sub("pastExp"),
+      ...c.experiences.map((x) => card([el("div", { class: "xp" }, [
+        x.logo ? el("img", { src: x.logo, alt: "", class: "logo-img" }) : el("span", { class: "logo-img ph" }, initials(x.org || x.title)),
+        el("div", {}, [el("div", { class: "xp-top" }, [el("h4", {}, t(x.title)), el("span", { class: "meta" }, t(x.period))]),
+          el("p", { class: "org" }, t(x.org)), ...paras(x.text), list(x.bullets), tags(x.tools)])])], "card xpcard")),
+      sub("roleModels"), el("p", { class: "sub tight" }, u("roleModelsSub")),
+      grid("grid3", c.roleModels.map((r) => card([
+        r.photo ? el("img", { src: r.photo, alt: r.name, class: "avatar-sm" }) : el("span", { class: "avatar-sm ph" }, initials(r.name)),
+        el("h4", { class: "center" }, r.name), el("p", { class: "meta center" }, t(r.job)), list(r.points)]))),
+      sub("mobProjects"),
+      grid("grid3", c.mobilityProjects.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.place)),
+        x.roleModel ? el("p", {}, [el("strong", {}, u("aligned") + ": "), x.roleModel]) : null, ...paras(x.text)]))),
+      c.video.includes("[") ? null : [sub("pitch"), el("p", { class: "sub tight" }, u("pitchSub")),
+        el("div", { class: "video" }, el("iframe", { src: c.video, title: "Elevator pitch", allowfullscreen: "", loading: "lazy" }))]]);
+
+    const k = D.contact;
+    body("contact-body", [head("contact"), grid("grid3", [
+      card([el("h4", {}, u("email")), el("p", {}, k.email)], "card center"),
+      card([el("h4", {}, u("phone")), el("p", {}, k.phone)], "card center"),
+      card([el("h4", {}, "LinkedIn"), el("p", {}, a(k.linkedin, u("linkedin")))], "card center")])]);
   }
 
-  document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("click", () => {
-    lang = b.dataset.lang; try { localStorage.setItem("lang", lang); } catch (e) {} render();
-  }));
+  $("langbtn").addEventListener("click", () => { lang = lang === "fr" ? "en" : "fr"; try { localStorage.setItem("lang", lang); } catch (e) {} render(); });
   render();
-
   const links = [...document.querySelectorAll("#nav a")];
-  const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting &&
-    links.forEach((a) => a.setAttribute("aria-current", String(a.hash === "#" + e.target.id)))), { rootMargin: "-30% 0px -60% 0px" });
+  const io = new IntersectionObserver((es) => es.forEach((s) => s.isIntersecting &&
+    links.forEach((l) => l.setAttribute("aria-current", String(l.hash === "#" + s.target.id)))), { rootMargin: "-40% 0px -55% 0px" });
   document.querySelectorAll("main section").forEach((s) => io.observe(s));
 })();
