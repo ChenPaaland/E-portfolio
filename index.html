@@ -7,7 +7,73 @@
 <meta name="description" content="E-portfolio of Thomas Casteran, engineering student at ENSEEIHT – Toulouse INP-N7.">
 <meta property="og:title" content="Thomas Casteran – Engineering Portfolio">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="css/style.css">
+<style>
+:root{--bg:#fff;--band:#f6f5fc;--ink:#14122b;--muted:#625f7c;--line:#e4e1f2;--panel:#fff;--accent:#5b3fd0;--tint:#ece8ff;--on:#fff;--dark:#2a2547}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0e1a;--band:#141226;--ink:#ecebfa;--muted:#a09db8;--line:#2a2644;--panel:#1a1730;--accent:#a593ff;--tint:#252046;--on:#0f0e1a;--dark:#3a3470}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:var(--panel);padding:.5rem;z-index:9}
+.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.25rem,6vw,6rem);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+#nav{display:flex;gap:1.6rem;margin-left:auto}
+#nav a{color:var(--muted);text-decoration:none;font-size:.95rem;padding:.2rem 0;border-bottom:2px solid transparent}
+#nav a:hover,#nav a[aria-current=true]{color:var(--ink);border-color:var(--accent)}
+.pill{border:1.5px solid var(--accent);background:none;color:var(--accent);border-radius:999px;padding:.25rem 1rem;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.pill:hover{background:var(--accent);color:var(--on)}
+section{padding:6rem clamp(1.25rem,6vw,6rem)}
+section:nth-of-type(even){background:var(--band)}
+.wrap{max-width:68rem;margin:auto}
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;min-height:calc(100vh - 4.5rem);padding-top:3rem;padding-bottom:3rem}
+.slash{position:absolute;left:50%;top:-10%;width:3px;height:130%;background:var(--accent);transform:rotate(5deg);opacity:.85}
+.hero-text{position:relative;max-width:30rem;justify-self:end}
+h1{margin:0 0 1.5rem;font-size:clamp(3rem,7vw,5.2rem);line-height:.95;letter-spacing:-.045em;font-weight:800;animation:rise .8s ease both}
+h1 span{display:block}
+.pitch{font-size:1.2rem;color:var(--muted);margin:0 0 1.5rem}
+.dots{list-style:none;padding:0;margin:0 0 2rem;color:var(--muted)}
+.dots li::before{content:"";display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent);margin-right:.7rem}
+.hero-photo{position:relative;justify-self:center;padding:2rem 0 0 2rem}
+.offset{position:absolute;left:0;top:0;width:75%;height:75%;background:var(--tint);border-radius:0 0 0 2.5rem}
+.photo{position:relative;display:block;width:min(22rem,78vw);aspect-ratio:3/4;object-fit:cover;border-radius:.5rem;box-shadow:0 24px 50px -20px rgba(40,30,100,.35)}
+.avatar{display:grid;place-items:center;background:var(--accent);color:var(--on);font-size:4rem;font-weight:800}
+.btn{display:inline-block;border:1.5px solid var(--line);border-radius:.6rem;padding:.55rem 1.2rem;font-weight:600;font-size:.95rem;text-decoration:none;color:var(--ink);background:var(--panel)}
+.btn:hover{border-color:var(--accent)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--on)}.btn.dark{background:var(--dark);border-color:var(--dark);color:#fff}
+.links,.cta{display:flex;gap:.7rem;flex-wrap:wrap;margin:0}.cta{justify-content:center;margin-bottom:3.5rem}
+.title{text-align:center;font-size:clamp(2rem,4.5vw,3rem);letter-spacing:-.03em;font-weight:800;line-height:1.1;margin:0 0 .6rem}
+.sub{text-align:center;color:var(--muted);font-size:1.1rem;margin:0 0 3rem}.sub.tight{margin:-.25rem 0 1.5rem}
+.h3{text-align:center;font-size:1.5rem;letter-spacing:-.02em;margin:3.5rem 0 1.5rem}
+h4{margin:0 0 .5rem;font-size:1.15rem}
+.grid2,.grid3{display:grid;gap:1.5rem}
+.grid2{grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))}.grid3{grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:1.5rem;overflow:hidden}
+.card:has(.shot){padding:0}.pad{padding:1.5rem}
+.shot{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.card p{margin:.5rem 0}.center{text-align:center}.card.center{display:flex;flex-direction:column;align-items:center}
+.meta{color:var(--muted);font-size:.9rem;margin:0}.level{font-size:1.6rem;font-weight:800;color:var(--accent);margin:0}
+.tags{display:flex;gap:.5rem;flex-wrap:wrap;list-style:none;padding:0;margin:1rem 0}
+.tags li{background:var(--tint);color:var(--accent);border-radius:999px;padding:.1rem .8rem;font-size:.85rem;font-weight:600}
+.bullets{padding-left:1.2rem;margin:.75rem 0}.bullets li{margin:.3rem 0}
+.item{padding-left:1.1rem;border-left:3px solid var(--accent)}.item p{margin:.4rem 0;color:var(--muted)}
+.prose{max-width:44rem;margin:auto}
+.xpcard{max-width:46rem;margin:0 auto 1.5rem}
+.xp{display:flex;gap:1.1rem}.xp>div:last-child{flex:1}
+.xp-top{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.logo-img{width:3rem;height:3rem;border-radius:.7rem;object-fit:contain;flex:none;border:1px solid var(--line)}
+.ph{display:grid;place-items:center;background:var(--tint);color:var(--accent);font-weight:800;font-size:1rem;border:0;border-radius:50%}
+.org{color:var(--accent);font-weight:600;margin:.1rem 0 .5rem}
+.avatar-sm{display:block;width:4.5rem;height:4.5rem;border-radius:50%;object-fit:cover;margin:0 auto .75rem}
+.video{aspect-ratio:16/9;max-width:46rem;margin:auto}.video iframe{width:100%;height:100%;border:0;border-radius:1rem}
+footer{padding:2.5rem 1rem;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@media(max-width:62rem){
+ .bar{flex-wrap:wrap;padding:.7rem 1rem}#nav{order:3;width:100%;margin:0;overflow-x:auto;gap:1.1rem;padding-bottom:.2rem}#nav a{white-space:nowrap}
+ .pill{margin-left:auto}
+ .hero{grid-template-columns:1fr;min-height:0;gap:2rem}.slash{display:none}.hero-text{justify-self:start;max-width:none}
+ section{padding-top:4rem;padding-bottom:4rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}h1{animation:none}}
+</style>
 </head>
 <body>
 <a class="skip" href="#welcome" data-i18n="skip"></a>
@@ -38,7 +104,194 @@
   <section id="contact"><div class="wrap" id="contact-body"></div></section>
 </main>
 <footer><p id="foot"></p></footer>
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
+<script>
+/* ===== TES DONNÉES : modifie uniquement cette partie ===== */
+// Everything on the site comes from this file. Edit here only.
+// B("English", "Français") = text shown in the selected language.
+// Leave "" (or []) to hide a field. Copy a { ... } block to add an item.
+const B = (en, fr) => ({ en, fr });
+
+window.DATA = {
+  profile: {
+    name: "Thomas Casteran",
+    pitch: B("Engineering student at ENSEEIHT. [One sentence: what you do and what makes you different.]",
+             "Élève ingénieur à l'ENSEEIHT. [Une phrase : ce que tu fais et ce qui te distingue.]"),
+    highlights: [B("[Your main field]", "[Ton domaine principal]"), B("ENSEEIHT, Toulouse", "ENSEEIHT, Toulouse")],
+    photo: "assets/img/photo.jpg",
+    linkedin: "https://www.linkedin.com/in/[your-profile]",
+    github: "https://github.com/ChenPaaland"
+  },
+  engineering: {
+    skills: [
+      { group: B("Languages", "Langages"), items: ["[Python]", "[C]", "[Java]"] },
+      { group: B("Data & tools", "Données & outils"), items: ["[Git]", "[Linux]"] },
+      { group: B("Soft skills", "Savoir-être"), items: [B("[Teamwork]", "[Travail en équipe]"), B("[Adaptability]", "[Adaptabilité]")] }
+    ],
+    projects: [
+      { title: B("[Project title]", "[Titre du projet]"), type: B("School project", "Projet scolaire"), period: "[2026]",
+        text: B("[Situation, task and action: what you built and how.]", "[Situation, tâche et action : ce que tu as construit et comment.]"),
+        result: B("[Result, with numbers]", "[Résultat, avec des chiffres]"),
+        learned: B("[What you learned]", "[Ce que tu as appris]"),
+        tools: ["[Python]", "[C]"], link: "", linkLabel: B("View project", "Voir le projet"), image: "" },
+      { title: B("[Personal project]", "[Projet personnel]"), type: B("Personal project", "Projet personnel"), period: "[2025]",
+        text: B("[...]", "[...]"), result: "", learned: "", tools: ["[...]"],
+        link: "https://github.com/ChenPaaland/[repo]", linkLabel: B("View on GitHub", "Voir sur GitHub"), image: "" }
+    ]
+  },
+  mobility: {
+    languages: [ { name: B("English", "Anglais"), level: "[C1]" }, { name: B("German", "Allemand"), level: "[B1]" } ],
+    experiences: [ { title: B("[PCE / LV2 / trip]", "[PCE / LV2 / voyage]"), period: "[...]", text: B("[What you did and learned]", "[Ce que tu as fait et appris]") } ],
+    text: [ B("[Your mobility goal: when, where, why.]", "[Ton objectif de mobilité : quand, où, pourquoi.]") ]
+  },
+  engagement: [
+    { title: B("[Association / volunteering]", "[Association / bénévolat]"), text: [B("[Your role and impact.]", "[Ton rôle et ton impact.]")] },
+    { title: B("[Sustainability action]", "[Action développement durable]"), text: [B("[...]", "[...]")] }
+  ],
+  activities: [
+    { category: B("[Sport]", "[Sport]"), items: [ { title: B("[Activity]", "[Activité]"), text: B("[Level, results, what it teaches you]", "[Niveau, résultats, ce que ça t'apprend]") } ] }
+  ],
+  career: {
+    cv: { en: "assets/cv/cv-en.pdf", fr: "assets/cv/cv-fr.pdf" },
+    experiences: [
+      { title: B("[Internship / PEP]", "[Stage / PEP]"), org: "[Company, City]", period: "[Jun–Jul 2026]", logo: "",
+        text: B("[Situation, task, action, result.]", "[Situation, tâche, action, résultat.]"),
+        bullets: [B("[Key action with a number]", "[Action clé chiffrée]")], tools: ["[Tool]"] }
+    ],
+    roleModels: [
+      { name: "[Role model 1]", job: B("[Job, company]", "[Poste, entreprise]"), photo: "",
+        points: [B("[Path]", "[Parcours]"), B("[What you take from it]", "[Ce que tu en retiens]")] },
+      { name: "[Role model 2]", job: "", photo: "", points: [] },
+      { name: "[Role model 3]", job: "", photo: "", points: [] }
+    ],
+    mobilityProjects: [
+      { title: B("[Project 1]", "[Projet 1]"), place: "[Country / university or company]", roleModel: "[Role model 1]", text: B("[Why it is aligned]", "[Pourquoi c'est aligné]") },
+      { title: B("[Project 2]", "[Projet 2]"), place: "[...]", roleModel: "[Role model 2]", text: "" },
+      { title: B("[Project 3]", "[Projet 3]"), place: "[...]", roleModel: "[Role model 3]", text: "" }
+    ],
+    video: "https://www.youtube.com/embed/[VIDEO_ID]"   // unlisted YouTube video ("embed" link)
+  },
+  contact: { email: "[your.email@example.com]", phone: "[+33 6 00 00 00 00]", linkedin: "https://www.linkedin.com/in/[your-profile]/" }
+};
+
+/* ===== FIN DES DONNÉES ===== */
+</script>
+<script>
+(function () {
+  const D = window.DATA, $ = (id) => document.getElementById(id);
+  const UI = {
+    en: { skip: "Skip to content", welcome: "Home", engineering: "Engineering", mobility: "Mobility", engagement: "Engagement",
+      activities: "Activities", career: "Career", contact: "Contact", other: "FR", otherLabel: "Version française",
+      engineeringSub: "Projects and skills from my engineering course.", mobilitySub: "Languages and international aspirations.",
+      engagementSub: "Sustainability, community and civic involvement.", activitiesSub: "Sport and passions outside engineering.",
+      careerSub: "Professional documents, goals and sources of inspiration.", contactSub: "Get in touch for an internship, a project or a simple chat.",
+      skills: "Skills", projects: "Projects", experiences: "Experiences", mobGoal: "Mobility project", cvEn: "Download CV (English)",
+      cvFr: "Download CV (French)", linkedin: "My LinkedIn profile", pastExp: "Past experience", roleModels: "Role models",
+      roleModelsSub: "Analysis of 3 inspiring profiles and 3 potential mobility projects.", mobProjects: "Potential mobility projects",
+      aligned: "Aligned with", pitch: "Elevator pitch", pitchSub: "2–3 minutes in English: present, brief past, future.",
+      result: "Result", learned: "What I learned", email: "Email", phone: "Phone", portrait: "Portrait of " },
+    fr: { skip: "Aller au contenu", welcome: "Accueil", engineering: "Ingénierie", mobility: "Mobilité", engagement: "Engagement",
+      activities: "Activités", career: "Carrière", contact: "Contact", other: "EN", otherLabel: "English version",
+      engineeringSub: "Projets et compétences de mon cursus ingénieur.", mobilitySub: "Langues et aspirations à l'international.",
+      engagementSub: "Développement durable, vie associative et citoyenne.", activitiesSub: "Sport et passions en dehors de l'ingénierie.",
+      careerSub: "Documents professionnels, objectifs et sources d'inspiration.", contactSub: "Écris-moi pour un stage, un projet ou un simple échange.",
+      skills: "Compétences", projects: "Projets", experiences: "Expériences", mobGoal: "Projet de mobilité", cvEn: "Télécharger le CV (anglais)",
+      cvFr: "Télécharger le CV (français)", linkedin: "Mon profil LinkedIn", pastExp: "Expériences passées", roleModels: "Modèles inspirants",
+      roleModelsSub: "Analyse de 3 profils inspirants et de 3 projets de mobilité potentiels.", mobProjects: "Projets de mobilité potentiels",
+      aligned: "Aligné avec", pitch: "Elevator pitch", pitchSub: "2–3 minutes en anglais : présent, passé très bref, futur.",
+      result: "Résultat", learned: "Ce que j'ai appris", email: "E-mail", phone: "Téléphone", portrait: "Portrait de " }
+  };
+  let lang = "en";
+  try { lang = localStorage.getItem("lang") || (navigator.language || "en").slice(0, 2); } catch (e) { lang = (navigator.language || "en").slice(0, 2); }
+  if (lang !== "fr") lang = "en";
+
+  const t = (v) => v && typeof v === "object" && !Array.isArray(v) ? (v[lang] ?? v.en ?? "") : (v ?? "");
+  const u = (k) => UI[lang][k];
+  const el = (tag, attrs = {}, kids = []) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) if (v !== "" && v != null) n.setAttribute(k, v);
+    [].concat(kids).forEach((c) => c != null && c !== "" && n.append(c));
+    return n;
+  };
+  const a = (href, text, cls) => href ? el("a", { href, class: cls, target: "_blank", rel: "noopener" }, text) : null;
+  const tags = (arr) => (arr && arr.length) ? el("ul", { class: "tags" }, arr.map((x) => el("li", {}, t(x)))) : null;
+  const list = (arr) => (arr && arr.length) ? el("ul", { class: "bullets" }, arr.map((x) => el("li", {}, t(x)))) : null;
+  const paras = (v) => v ? [].concat(v).map((x) => el("p", {}, t(x))) : [];
+  const head = (k) => [el("h2", { class: "title" }, u(k)), el("p", { class: "sub" }, u(k + "Sub"))];
+  const sub = (k) => el("h3", { class: "h3" }, u(k));
+  const grid = (cls, kids) => el("div", { class: cls }, kids);
+  const card = (kids, cls = "card") => el("article", { class: cls }, kids);
+  const body = (id, kids) => $(id).replaceChildren(...kids.flat().filter(Boolean));
+  const initials = (s) => s.replace(/[\[\]]/g, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+
+  function render() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach((n) => (n.textContent = u(n.dataset.i18n)));
+    const L = $("langbtn"); L.textContent = u("other"); L.setAttribute("aria-label", u("otherLabel"));
+    const p = D.profile, c = D.career, e = D.engineering, m = D.mobility;
+    document.title = p.name + " – Portfolio";
+    $("brand").textContent = p.name; $("pitch").textContent = t(p.pitch);
+    const [first, ...rest] = p.name.split(" ");
+    $("name").replaceChildren(el("span", {}, first), el("span", {}, rest.join(" ")));
+    $("highlights").replaceChildren(...p.highlights.map((h) => el("li", {}, t(h))));
+    $("links").replaceChildren(a(c.cv[lang], u(lang === "fr" ? "cvFr" : "cvEn"), "btn solid"), a(p.linkedin, "LinkedIn", "btn"), a(p.github, "GitHub", "btn"));
+    const img = el("img", { src: p.photo, alt: u("portrait") + p.name, class: "photo" });
+    img.onerror = () => $("photo-wrap").replaceChildren(el("div", { class: "photo avatar", "aria-hidden": "true" }, initials(p.name)));
+    $("photo-wrap").replaceChildren(img);
+    $("foot").textContent = "© " + new Date().getFullYear() + " " + p.name;
+
+    body("engineering-body", [head("engineering"), sub("skills"),
+      grid("grid3", e.skills.map((s) => card([el("h4", {}, t(s.group)), tags(s.items)]))), sub("projects"),
+      grid("grid2", e.projects.map((x) => card([
+        x.image ? el("img", { src: x.image, alt: "", class: "shot", loading: "lazy" }) : null,
+        el("div", { class: "pad" }, [el("p", { class: "meta" }, [t(x.type), t(x.period)].filter(Boolean).join(" · ")),
+          el("h4", {}, t(x.title)), ...paras(x.text),
+          x.result ? el("p", {}, [el("strong", {}, u("result") + ": "), t(x.result)]) : null,
+          x.learned ? el("p", {}, [el("strong", {}, u("learned") + ": "), t(x.learned)]) : null,
+          tags(x.tools), a(x.link, t(x.linkLabel), "btn")])])))]);
+
+    body("mobility-body", [head("mobility"),
+      grid("grid2", m.languages.map((l) => card([el("h4", {}, t(l.name)), el("p", { class: "level" }, t(l.level))]))),
+      sub("experiences"), ...m.experiences.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.period)), ...paras(x.text)])),
+      sub("mobGoal"), grid("prose", paras(m.text))]);
+
+    body("engagement-body", [head("engagement"),
+      grid("grid2", D.engagement.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))]);
+
+    body("activities-body", [head("activities"), ...D.activities.map((g) => [sub2(t(g.category)),
+      grid("grid2", g.items.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))])]);
+    function sub2(txt) { return el("h3", { class: "h3" }, txt); }
+
+    body("career-body", [head("career"),
+      el("p", { class: "cta" }, [a(c.cv.en, u("cvEn"), "btn solid"), a(c.cv.fr, u("cvFr"), "btn dark"), a(p.linkedin, u("linkedin"), "btn")]),
+      sub("pastExp"),
+      ...c.experiences.map((x) => card([el("div", { class: "xp" }, [
+        x.logo ? el("img", { src: x.logo, alt: "", class: "logo-img" }) : el("span", { class: "logo-img ph" }, initials(x.org || x.title)),
+        el("div", {}, [el("div", { class: "xp-top" }, [el("h4", {}, t(x.title)), el("span", { class: "meta" }, t(x.period))]),
+          el("p", { class: "org" }, t(x.org)), ...paras(x.text), list(x.bullets), tags(x.tools)])])], "card xpcard")),
+      sub("roleModels"), el("p", { class: "sub tight" }, u("roleModelsSub")),
+      grid("grid3", c.roleModels.map((r) => card([
+        r.photo ? el("img", { src: r.photo, alt: r.name, class: "avatar-sm" }) : el("span", { class: "avatar-sm ph" }, initials(r.name)),
+        el("h4", { class: "center" }, r.name), el("p", { class: "meta center" }, t(r.job)), list(r.points)]))),
+      sub("mobProjects"),
+      grid("grid3", c.mobilityProjects.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.place)),
+        x.roleModel ? el("p", {}, [el("strong", {}, u("aligned") + ": "), x.roleModel]) : null, ...paras(x.text)]))),
+      c.video.includes("[") ? null : [sub("pitch"), el("p", { class: "sub tight" }, u("pitchSub")),
+        el("div", { class: "video" }, el("iframe", { src: c.video, title: "Elevator pitch", allowfullscreen: "", loading: "lazy" }))]]);
+
+    const k = D.contact;
+    body("contact-body", [head("contact"), grid("grid3", [
+      card([el("h4", {}, u("email")), el("p", {}, k.email)], "card center"),
+      card([el("h4", {}, u("phone")), el("p", {}, k.phone)], "card center"),
+      card([el("h4", {}, "LinkedIn"), el("p", {}, a(k.linkedin, u("linkedin")))], "card center")])]);
+  }
+
+  $("langbtn").addEventListener("click", () => { lang = lang === "fr" ? "en" : "fr"; try { localStorage.setItem("lang", lang); } catch (e) {} render(); });
+  render();
+  const links = [...document.querySelectorAll("#nav a")];
+  const io = new IntersectionObserver((es) => es.forEach((s) => s.isIntersecting &&
+    links.forEach((l) => l.setAttribute("aria-current", String(l.hash === "#" + s.target.id)))), { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("main section").forEach((s) => io.observe(s));
+})();
+</script>
 </body>
 </html>
