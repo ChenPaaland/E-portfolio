@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Your Name] – Engineering Portfolio</title>
+<meta name="description" content="E-portfolio of [Your Name], engineering student at ENSEEIHT – Toulouse INP-N7.">
+<meta property="og:title" content="[Your Name] – Engineering Portfolio">
+<meta property="og:description" content="Projects, mobility, engagement and career project.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#welcome">Skip to content</a>
+<header class="top">
+  <nav aria-label="Main">
+    <a class="brand" href="#welcome" id="brand">[Your Name]</a>
+    <ul>
+      <li><a href="#welcome">Welcome</a></li>
+      <li><a href="#course">Engineering course</a></li>
+      <li><a href="#mobility">International mobility</a></li>
+      <li><a href="#civic">Sustainability &amp; civic engagement</a></li>
+      <li><a href="#sport">Sport &amp; activities</a></li>
+      <li><a href="#career">Career development</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section id="welcome" class="hero">
+    <img id="photo" alt="Portrait of the author" width="160" height="160">
+    <div>
+      <h1 id="name"></h1>
+      <p class="role" id="role"></p>
+      <p class="pitch" id="pitch"></p>
+      <p class="links" id="links"></p>
+      <h2>Interests</h2>
+      <ul class="tags" id="interests"></ul>
+    </div>
+  </section>
+
+  <section id="course"><h2>Engineering course</h2><p id="course-intro"></p><div class="grid" id="course-projects"></div></section>
+
+  <section id="mobility"><h2>International mobility</h2>
+    <h3>Experiences</h3><div class="grid" id="mob-exp"></div>
+    <h3>Potential projects</h3><div class="grid" id="mob-plans"></div>
+  </section>
+
+  <section id="civic"><h2>Sustainability &amp; civic engagement</h2><div class="grid" id="civic-items"></div></section>
+
+  <section id="sport"><h2>Sport &amp; other activities</h2><div class="grid" id="sport-items"></div></section>
+
+  <section id="career"><h2>Career development</h2>
+    <h3>Internships &amp; PEP</h3><div class="grid" id="career-exp"></div>
+    <h3 id="career-project">Career project</h3>
+    <div class="block"><h4>CVs</h4><p class="links" id="cv-links"></p>
+      <iframe id="cv-preview" title="CV preview" loading="lazy"></iframe></div>
+    <div class="block"><h4>LinkedIn</h4><p class="links" id="li-links"></p></div>
+    <div class="block"><h4>Elevator pitch (2–3 min, English)</h4>
+      <p class="muted">Structure: present, very brief past, future.</p>
+      <div class="video"><iframe id="video" title="Elevator pitch video" allowfullscreen loading="lazy"></iframe></div></div>
+    <div class="block"><h4>Role models</h4><div class="grid" id="role-models"></div></div>
+    <div class="block"><h4>International mobility projects aligned with role models</h4><div class="grid" id="career-mobility"></div></div>
+  </section>
+</main>
+<footer><p id="foot"></p></footer>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
