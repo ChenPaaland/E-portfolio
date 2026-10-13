@@ -11,58 +11,33 @@
 </head>
 <body>
 <a class="skip" href="#welcome" data-i18n="skip"></a>
-<div class="shell">
-<aside class="side">
-  <a class="brand" href="#welcome" id="brand"></a>
+<header class="bar">
+  <a class="logo" href="#welcome" id="brand"></a>
   <nav id="nav" aria-label="Main">
-    <a href="#welcome" data-i18n="welcome"></a>
-    <a href="#course" data-i18n="course"></a>
-    <a href="#mobility" data-i18n="mobility"></a>
-    <a href="#civic" data-i18n="civic"></a>
-    <a href="#sport" data-i18n="sport"></a>
-    <a href="#career" data-i18n="career"></a>
+    <a href="#welcome" data-i18n="welcome"></a><a href="#engineering" data-i18n="engineering"></a>
+    <a href="#mobility" data-i18n="mobility"></a><a href="#engagement" data-i18n="engagement"></a>
+    <a href="#activities" data-i18n="activities"></a><a href="#career" data-i18n="career"></a>
+    <a href="#contact" data-i18n="contact"></a>
   </nav>
-  <div class="side-foot">
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button>
-    </div>
-    <p class="links" id="side-links"></p>
-  </div>
-</aside>
+  <button id="langbtn" class="pill" type="button"></button>
+</header>
 <main>
   <section id="welcome" class="hero">
-    <h1 id="name"></h1>
-    <p class="role" id="role"></p>
-    <div class="hero-body">
-      <div id="photo-wrap"></div>
-      <div>
-        <p class="pitch" id="pitch"></p>
-        <p class="links" id="links"></p>
-        <h2 class="small" data-i18n="interests"></h2>
-        <ul class="tags" id="interests"></ul>
-      </div>
+    <span class="slash" aria-hidden="true"></span>
+    <div class="hero-text">
+      <h1 id="name"></h1><p class="pitch" id="pitch"></p>
+      <ul class="dots" id="highlights"></ul><p class="links" id="links"></p>
     </div>
+    <div class="hero-photo"><div class="offset" aria-hidden="true"></div><div id="photo-wrap"></div></div>
   </section>
-  <section id="course"><h2 data-i18n="course"></h2><p class="lead" id="course-intro"></p><div id="course-projects"></div></section>
-  <section id="mobility"><h2 data-i18n="mobility"></h2>
-    <h3 class="sub" data-i18n="experiences"></h3><div id="mob-exp"></div>
-    <h3 class="sub" data-i18n="plans"></h3><div id="mob-plans"></div></section>
-  <section id="civic"><h2 data-i18n="civic"></h2><div id="civic-items"></div></section>
-  <section id="sport"><h2 data-i18n="sport"></h2><div id="sport-items"></div></section>
-  <section id="career"><h2 data-i18n="career"></h2>
-    <h3 class="sub" data-i18n="internships"></h3><div id="career-exp"></div>
-    <h3 class="sub" data-i18n="careerProject"></h3>
-    <h4 data-i18n="cvs"></h4><p class="links" id="cv-links"></p>
-    <iframe id="cv-preview" title="CV" loading="lazy"></iframe>
-    <h4 data-i18n="linkedin"></h4><p class="links" id="li-links"></p>
-    <div id="video-wrap"><h4 data-i18n="video"></h4><p class="muted" data-i18n="videoNote"></p>
-      <div class="video"><iframe id="video" title="Elevator pitch" allowfullscreen loading="lazy"></iframe></div></div>
-    <h4 data-i18n="roleModels"></h4><div class="cols" id="role-models"></div>
-    <h4 data-i18n="mobAligned"></h4><div class="cols" id="career-mobility"></div>
-  </section>
-  <footer><p id="foot"></p></footer>
+  <section id="engineering"><div class="wrap" id="engineering-body"></div></section>
+  <section id="mobility"><div class="wrap" id="mobility-body"></div></section>
+  <section id="engagement"><div class="wrap" id="engagement-body"></div></section>
+  <section id="activities"><div class="wrap" id="activities-body"></div></section>
+  <section id="career"><div class="wrap" id="career-body"></div></section>
+  <section id="contact"><div class="wrap" id="contact-body"></div></section>
 </main>
-</div>
+<footer><p id="foot"></p></footer>
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
 </body>
