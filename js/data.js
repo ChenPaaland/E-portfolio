@@ -1,6 +1,9 @@
-// Everything on the site comes from this file. Edit here only.
-// B("English", "Français") = text shown in the selected language.
-// Leave "" (or []) to hide a field. Copy a { ... } block to add an item.
+/* ============================================================
+   TES DONNÉES — modifie uniquement cette partie.
+   B("English", "Français") = texte affiché dans la langue choisie.
+   Laisse "" (ou []) pour masquer un champ.
+   Pour ajouter un projet / une activité : copie un bloc { ... } et sépare-les par une virgule.
+   ============================================================ */
 const B = (en, fr) => ({ en, fr });
 
 window.DATA = {
@@ -60,7 +63,8 @@ window.DATA = {
       { title: B("[Project 2]", "[Projet 2]"), place: "[...]", roleModel: "[Role model 2]", text: "" },
       { title: B("[Project 3]", "[Projet 3]"), place: "[...]", roleModel: "[Role model 3]", text: "" }
     ],
-    video: "https://www.youtube.com/embed/[VIDEO_ID]"   // unlisted YouTube video ("embed" link)
+    video: "https://www.youtube.com/embed/[VIDEO_ID]"   // vidéo YouTube "non répertoriée", lien "embed"
   },
   contact: { email: "[your.email@example.com]", phone: "[+33 6 00 00 00 00]", linkedin: "https://www.linkedin.com/in/[your-profile]/" }
 };
+/* ===================== FIN DES DONNÉES ===================== */
