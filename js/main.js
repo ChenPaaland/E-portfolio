@@ -47,6 +47,7 @@
   const initials = (s) => s.replace(/[\[\]]/g, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
   function render() {
+    requestAnimationFrame(reveal);
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach((n) => (n.textContent = u(n.dataset.i18n)));
     const L = $("langbtn"); L.textContent = u("other"); L.setAttribute("aria-label", u("otherLabel"));
@@ -109,4 +110,30 @@
   const io = new IntersectionObserver((es) => es.forEach((s) => s.isIntersecting &&
     links.forEach((l) => l.setAttribute("aria-current", String(l.hash === "#" + s.target.id)))), { rootMargin: "-40% 0px -55% 0px" });
   document.querySelectorAll("main section").forEach((s) => io.observe(s));
+
+  /* ---- animations ---- */
+  function reveal() {
+    if (!("IntersectionObserver" in window)) return;
+    const rio = reveal.io || (reveal.io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("in"); rio.unobserve(e.target); }
+    }), { threshold: 0.06, rootMargin: "0px 0px -6% 0px" }));
+    document.querySelectorAll(".wrap > *").forEach((n) => { if (!n.classList.contains("reveal")) { n.classList.add("reveal"); rio.observe(n); } });
+  }
+  document.addEventListener("pointerdown", (e) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const host = e.target.closest(".btn,.pill,#nav a,.tile,.card,.item,.chip,.logo");
+    if (!host) return;
+    const r = host.getBoundingClientRect(), size = Math.max(r.width, r.height) * 2.2;
+    const dot = document.createElement("span");
+    dot.className = "ripple";
+    dot.style.cssText = "left:" + (e.clientX - r.left) + "px;top:" + (e.clientY - r.top) + "px;width:" + size + "px;height:" + size + "px";
+    host.append(dot);
+    dot.addEventListener("animationend", () => dot.remove());
+  });
+  document.querySelectorAll("#nav a, .logo").forEach((l) => l.addEventListener("click", () => {
+    setTimeout(() => {
+      const ti = document.querySelector(l.hash + " .title");
+      if (ti) { ti.classList.remove("pulse"); void ti.offsetWidth; ti.classList.add("pulse"); }
+    }, 450);
+  }));
 })();
