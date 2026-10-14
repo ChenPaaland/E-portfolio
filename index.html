@@ -13,23 +13,25 @@
 <body>
 <a class="skip" href="#welcome" data-i18n="skip"></a>
 <header class="bar">
-  <a class="logo" href="#welcome" id="brand"></a>
-  <nav id="nav" aria-label="Main">
-    <a href="#welcome" data-i18n="welcome"></a><a href="#engineering" data-i18n="engineering"></a>
-    <a href="#mobility" data-i18n="mobility"></a><a href="#engagement" data-i18n="engagement"></a>
-    <a href="#activities" data-i18n="activities"></a><a href="#career" data-i18n="career"></a>
-    <a href="#contact" data-i18n="contact"></a>
-  </nav>
-  <button id="langbtn" class="pill" type="button"></button>
+  <div class="pillbar">
+    <a class="logo" href="#welcome" id="brand"></a>
+    <nav id="nav" aria-label="Main">
+      <a href="#welcome" data-i18n="welcome"></a><a href="#engineering" data-i18n="engineering"></a>
+      <a href="#mobility" data-i18n="mobility"></a><a href="#engagement" data-i18n="engagement"></a>
+      <a href="#activities" data-i18n="activities"></a><a href="#career" data-i18n="career"></a>
+      <a href="#contact" data-i18n="contact"></a>
+    </nav>
+    <button id="langbtn" class="pill" type="button"></button>
+  </div>
 </header>
 <main>
   <section id="welcome" class="hero">
-    <span class="slash" aria-hidden="true"></span>
-    <div class="hero-text">
-      <h1 id="name"></h1><p class="pitch" id="pitch"></p>
-      <ul class="dots" id="highlights"></ul><p class="links" id="links"></p>
+    <div class="bento">
+      <div class="tile t-name"><p class="hello" id="hello"></p><h1 id="name"></h1><p class="pitch" id="pitch"></p></div>
+      <div class="tile t-photo" id="photo-wrap"></div>
+      <div class="tile t-hi"><ul class="dots" id="highlights"></ul></div>
+      <div class="tile t-links"><p class="links" id="links"></p></div>
     </div>
-    <div class="hero-photo"><div class="offset" aria-hidden="true"></div><div id="photo-wrap"></div></div>
   </section>
   <section id="engineering"><div class="wrap" id="engineering-body"></div></section>
   <section id="mobility"><div class="wrap" id="mobility-body"></div></section>
@@ -39,7 +41,6 @@
   <section id="contact"><div class="wrap" id="contact-body"></div></section>
 </main>
 <footer><p id="foot"></p></footer>
-
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
 </body>
