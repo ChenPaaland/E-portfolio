@@ -34,14 +34,15 @@
     [].concat(kids).forEach((c) => c != null && c !== "" && n.append(c));
     return n;
   };
-  const a = (href, text, cls) => href ? el("a", { href, class: cls, target: "_blank", rel: "noopener" }, text) : null;
+  const a = (href, text, cls) => !href ? null : el("a", /^(mailto|tel):/.test(href) ? { href, class: cls } : { href, class: cls, target: "_blank", rel: "noopener" }, text);
   const tags = (arr) => (arr && arr.length) ? el("ul", { class: "tags" }, arr.map((x) => el("li", {}, t(x)))) : null;
   const list = (arr) => (arr && arr.length) ? el("ul", { class: "bullets" }, arr.map((x) => el("li", {}, t(x)))) : null;
   const paras = (v) => v ? [].concat(v).map((x) => el("p", {}, t(x))) : [];
   const head = (k) => [el("h2", { class: "title" }, u(k)), el("p", { class: "sub" }, u(k + "Sub"))];
-  const sub = (k) => el("h3", { class: "h3" }, u(k));
+  const sub = (txt) => el("h3", { class: "h3" }, txt);
   const grid = (cls, kids) => el("div", { class: cls }, kids);
   const card = (kids, cls = "card") => el("article", { class: cls }, kids);
+  const item = (x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)]);
   const body = (id, kids) => $(id).replaceChildren(...kids.flat().filter(Boolean));
   const initials = (s) => s.replace(/[\[\]]/g, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
@@ -49,7 +50,7 @@
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach((n) => (n.textContent = u(n.dataset.i18n)));
     const L = $("langbtn"); L.textContent = u("other"); L.setAttribute("aria-label", u("otherLabel"));
-    const p = D.profile, c = D.career, e = D.engineering, m = D.mobility;
+    const p = D.profile, c = D.career, e = D.engineering, m = D.mobility, k = D.contact;
     document.title = p.name + " – Portfolio";
     $("brand").textContent = p.name; $("pitch").textContent = t(p.pitch);
     const [first, ...rest] = p.name.split(" ");
@@ -61,8 +62,8 @@
     $("photo-wrap").replaceChildren(img);
     $("foot").textContent = "© " + new Date().getFullYear() + " " + p.name;
 
-    body("engineering-body", [head("engineering"), sub("skills"),
-      grid("grid3", e.skills.map((s) => card([el("h4", {}, t(s.group)), tags(s.items)]))), sub("projects"),
+    body("engineering-body", [head("engineering"), sub(u("skills")),
+      grid("grid3", e.skills.map((s) => card([el("h4", {}, t(s.group)), tags(s.items)]))), sub(u("projects")),
       grid("grid2", e.projects.map((x) => card([
         x.image ? el("img", { src: x.image, alt: "", class: "shot", loading: "lazy" }) : null,
         el("div", { class: "pad" }, [el("p", { class: "meta" }, [t(x.type), t(x.period)].filter(Boolean).join(" · ")),
@@ -73,37 +74,32 @@
 
     body("mobility-body", [head("mobility"),
       grid("grid2", m.languages.map((l) => card([el("h4", {}, t(l.name)), el("p", { class: "level" }, t(l.level))]))),
-      sub("experiences"), ...m.experiences.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.period)), ...paras(x.text)])),
-      sub("mobGoal"), grid("prose", paras(m.text))]);
+      sub(u("experiences")), ...m.experiences.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.period)), ...paras(x.text)], "card xpcard")),
+      sub(u("mobGoal")), grid("prose", paras(m.text))]);
 
-    body("engagement-body", [head("engagement"),
-      grid("grid2", D.engagement.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))]);
-
-    body("activities-body", [head("activities"), ...D.activities.map((g) => [sub2(t(g.category)),
-      grid("grid2", g.items.map((x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)])))])]);
-    function sub2(txt) { return el("h3", { class: "h3" }, txt); }
+    body("engagement-body", [head("engagement"), grid("grid2", D.engagement.map(item))]);
+    body("activities-body", [head("activities"), ...D.activities.map((g) => [sub(t(g.category)), grid("grid2", g.items.map(item))])]);
 
     body("career-body", [head("career"),
-      el("p", { class: "cta" }, [a(c.cv.en, u("cvEn"), "btn solid"), a(c.cv.fr, u("cvFr"), "btn dark"), a(p.linkedin, u("linkedin"), "btn")]),
-      sub("pastExp"),
+      el("p", { class: "cta" }, [a(c.cv.en, u("cvEn"), "btn solid"), a(c.cv.fr, u("cvFr"), "btn sky"), a(p.linkedin, u("linkedin"), "btn")]),
+      sub(u("pastExp")),
       ...c.experiences.map((x) => card([el("div", { class: "xp" }, [
-        x.logo ? el("img", { src: x.logo, alt: "", class: "logo-img" }) : el("span", { class: "logo-img ph" }, initials(x.org || x.title)),
+        x.logo ? el("img", { src: x.logo, alt: "", class: "logo-img" }) : el("span", { class: "logo-img ph" }, initials(x.org || t(x.title))),
         el("div", {}, [el("div", { class: "xp-top" }, [el("h4", {}, t(x.title)), el("span", { class: "meta" }, t(x.period))]),
           el("p", { class: "org" }, t(x.org)), ...paras(x.text), list(x.bullets), tags(x.tools)])])], "card xpcard")),
-      sub("roleModels"), el("p", { class: "sub tight" }, u("roleModelsSub")),
+      sub(u("roleModels")), el("p", { class: "sub tight" }, u("roleModelsSub")),
       grid("grid3", c.roleModels.map((r) => card([
         r.photo ? el("img", { src: r.photo, alt: r.name, class: "avatar-sm" }) : el("span", { class: "avatar-sm ph" }, initials(r.name)),
         el("h4", { class: "center" }, r.name), el("p", { class: "meta center" }, t(r.job)), list(r.points)]))),
-      sub("mobProjects"),
+      sub(u("mobProjects")),
       grid("grid3", c.mobilityProjects.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.place)),
         x.roleModel ? el("p", {}, [el("strong", {}, u("aligned") + ": "), x.roleModel]) : null, ...paras(x.text)]))),
-      c.video.includes("[") ? null : [sub("pitch"), el("p", { class: "sub tight" }, u("pitchSub")),
+      c.video.includes("[") ? null : [sub(u("pitch")), el("p", { class: "sub tight" }, u("pitchSub")),
         el("div", { class: "video" }, el("iframe", { src: c.video, title: "Elevator pitch", allowfullscreen: "", loading: "lazy" }))]]);
 
-    const k = D.contact;
     body("contact-body", [head("contact"), grid("grid3", [
-      card([el("h4", {}, u("email")), el("p", {}, k.email)], "card center"),
-      card([el("h4", {}, u("phone")), el("p", {}, k.phone)], "card center"),
+      card([el("h4", {}, u("email")), el("p", {}, a("mailto:" + k.email, k.email))], "card center"),
+      card([el("h4", {}, u("phone")), el("p", {}, a("tel:" + k.phone.replace(/\s/g, ""), k.phone))], "card center"),
       card([el("h4", {}, "LinkedIn"), el("p", {}, a(k.linkedin, u("linkedin")))], "card center")])]);
   }
 
