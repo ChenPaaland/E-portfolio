@@ -1,7 +1,7 @@
 (function () {
   const D = window.DATA, $ = (id) => document.getElementById(id);
   const UI = {
-    en: { skip: "Skip to content", welcome: "Home", engineering: "Engineering", mobility: "Mobility", engagement: "Engagement",
+    en: { skip: "Skip to content", hello: "Hello, I'm", welcome: "Home", engineering: "Engineering", mobility: "Mobility", engagement: "Engagement",
       activities: "Activities", career: "Career", contact: "Contact", other: "FR", otherLabel: "Version française",
       engineeringSub: "Projects and skills from my engineering course.", mobilitySub: "Languages and international aspirations.",
       engagementSub: "Sustainability, community and civic involvement.", activitiesSub: "Sport and passions outside engineering.",
@@ -11,7 +11,7 @@
       roleModelsSub: "Analysis of 3 inspiring profiles and 3 potential mobility projects.", mobProjects: "Potential mobility projects",
       aligned: "Aligned with", pitch: "Elevator pitch", pitchSub: "2–3 minutes in English: present, brief past, future.",
       result: "Result", learned: "What I learned", email: "Email", phone: "Phone", portrait: "Portrait of " },
-    fr: { skip: "Aller au contenu", welcome: "Accueil", engineering: "Ingénierie", mobility: "Mobilité", engagement: "Engagement",
+    fr: { skip: "Aller au contenu", hello: "Bonjour, je suis", welcome: "Accueil", engineering: "Ingénierie", mobility: "Mobilité", engagement: "Engagement",
       activities: "Activités", career: "Carrière", contact: "Contact", other: "EN", otherLabel: "English version",
       engineeringSub: "Projets et compétences de mon cursus ingénieur.", mobilitySub: "Langues et aspirations à l'international.",
       engagementSub: "Développement durable, vie associative et citoyenne.", activitiesSub: "Sport et passions en dehors de l'ingénierie.",
@@ -40,7 +40,7 @@
   const paras = (v) => v ? [].concat(v).map((x) => el("p", {}, t(x))) : [];
   const head = (k) => [el("h2", { class: "title" }, u(k)), el("p", { class: "sub" }, u(k + "Sub"))];
   const sub = (txt) => el("h3", { class: "h3" }, txt);
-  const grid = (cls, kids) => el("div", { class: cls }, kids);
+  const grid = (cls, kids) => el("div", { class: cls + " tg" }, kids);
   const card = (kids, cls = "card") => el("article", { class: cls }, kids);
   const item = (x) => el("article", { class: "item" }, [el("h4", {}, t(x.title)), ...paras(x.text)]);
   const body = (id, kids) => $(id).replaceChildren(...kids.flat().filter(Boolean));
@@ -52,7 +52,7 @@
     const L = $("langbtn"); L.textContent = u("other"); L.setAttribute("aria-label", u("otherLabel"));
     const p = D.profile, c = D.career, e = D.engineering, m = D.mobility, k = D.contact;
     document.title = p.name + " – Portfolio";
-    $("brand").textContent = p.name; $("pitch").textContent = t(p.pitch);
+    $("brand").textContent = p.name; $("hello").textContent = u("hello"); $("pitch").textContent = t(p.pitch);
     const [first, ...rest] = p.name.split(" ");
     $("name").replaceChildren(el("span", {}, first), el("span", {}, rest.join(" ")));
     $("highlights").replaceChildren(...p.highlights.map((h) => el("li", {}, t(h))));
@@ -64,16 +64,16 @@
 
     body("engineering-body", [head("engineering"), sub(u("skills")),
       grid("grid3", e.skills.map((s) => card([el("h4", {}, t(s.group)), tags(s.items)]))), sub(u("projects")),
-      grid("grid2", e.projects.map((x) => card([
-        x.image ? el("img", { src: x.image, alt: "", class: "shot", loading: "lazy" }) : null,
+      grid("stack", e.projects.map((x) => card([el("div", { class: "proj" }, [
+        x.image ? el("img", { src: x.image, alt: "", class: "shot", loading: "lazy" }) : el("div", { class: "tilecap" }, [el("span", {}, t(x.period)), el("span", {}, t(x.type))]),
         el("div", { class: "pad" }, [el("p", { class: "meta" }, [t(x.type), t(x.period)].filter(Boolean).join(" · ")),
           el("h4", {}, t(x.title)), ...paras(x.text),
           x.result ? el("p", {}, [el("strong", {}, u("result") + ": "), t(x.result)]) : null,
           x.learned ? el("p", {}, [el("strong", {}, u("learned") + ": "), t(x.learned)]) : null,
-          tags(x.tools), a(x.link, t(x.linkLabel), "btn")])])))]);
+          tags(x.tools), a(x.link, t(x.linkLabel), "btn")])])], "card projcard")))]);
 
     body("mobility-body", [head("mobility"),
-      grid("grid2", m.languages.map((l) => card([el("h4", {}, t(l.name)), el("p", { class: "level" }, t(l.level))]))),
+      grid("langs", m.languages.map((l) => el("span", { class: "chip" }, [el("strong", {}, t(l.name)), " " + t(l.level)]))),
       sub(u("experiences")), ...m.experiences.map((x) => card([el("h4", {}, t(x.title)), el("p", { class: "meta" }, t(x.period)), ...paras(x.text)], "card xpcard")),
       sub(u("mobGoal")), grid("prose", paras(m.text))]);
 
@@ -98,9 +98,9 @@
         el("div", { class: "video" }, el("iframe", { src: c.video, title: "Elevator pitch", allowfullscreen: "", loading: "lazy" }))]]);
 
     body("contact-body", [head("contact"), grid("grid3", [
-      card([el("h4", {}, u("email")), el("p", {}, a("mailto:" + k.email, k.email))], "card center"),
-      card([el("h4", {}, u("phone")), el("p", {}, a("tel:" + k.phone.replace(/\s/g, ""), k.phone))], "card center"),
-      card([el("h4", {}, "LinkedIn"), el("p", {}, a(k.linkedin, u("linkedin")))], "card center")])]);
+      card([el("h4", {}, u("email")), el("p", {}, a("mailto:" + k.email, k.email))], "item"),
+      card([el("h4", {}, u("phone")), el("p", {}, a("tel:" + k.phone.replace(/\s/g, ""), k.phone))], "item"),
+      card([el("h4", {}, "LinkedIn"), el("p", {}, a(k.linkedin, u("linkedin")))], "item")])]);
   }
 
   $("langbtn").addEventListener("click", () => { lang = lang === "fr" ? "en" : "fr"; try { localStorage.setItem("lang", lang); } catch (e) {} render(); });
