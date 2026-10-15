@@ -24,21 +24,6 @@ window.DATA = {
     ],
     projects: [
       {
-        title: B("Hurricane Irma Wind Profile Modeling", "Modélisation du profil de vent de l'ouragan Irma"),
-        type: B("Personal Project", "Projet personnel"),
-        period: "2026",
-        text: B("Developed a Python modeling pipeline utilizing NOAA IBTrACS historical datasets and Holland pressure/wind profile formulations to reconstruct tropical cyclone wind fields.",
-               "Développement d'une chaîne de modélisation en Python utilisant les données historiques NOAA IBTrACS et les équations de profil de pression/vent de Holland pour reconstituer les champs de vent de cyclones tropicaux."),
-        result: B("Accurate reconstruction of surface wind speeds supporting catastrophe risk analysis and reinsurance applications.",
-                "Reconstitution précise des vitesses de vent en surface pour l'analyse des risques de catastrophe et la réassurance."),
-        learned: B("Data extraction with Pandas, atmospheric pressure equations, and technical visualization.",
-                 "Extraction de données avec Pandas, équations de pression atmosphérique et visualisation technique."),
-        tools: ["Python", "Pandas", "Matplotlib", "Data Analysis"],
-        link: "https://github.com/ChenPaaland",
-        linkLabel: B("View on GitHub", "Voir sur GitHub"),
-        image: ""
-      },
-      {
         title: B("Solar Energy Exploitation & Guiana Case Study", "Exploitation de l'énergie solaire & Étude de cas Guyane"),
         type: B("School Project", "Projet scolaire"),
         period: "2026",
@@ -92,13 +77,6 @@ window.DATA = {
         B("Participation in citizenship and defense workshops, fostering team spirit and civic leadership.",
           "Participation active aux ateliers sur la citoyenneté, la défense et la mémoire. Développement de la cohésion d'équipe et du sens de l'engagement.")
       ]
-    },
-    {
-      title: B("Computer-Assisted Music (MAO) Student Club", "Club Musique Assistée par Ordinateur (MAO)"),
-      text: [
-        B("Co-founder and President of the student music production club at ENSEEIHT, organizing workshops on DAW setups, VST plugins, and music composition.",
-          "Co-fondateur et président du club de MAO à l'ENSEEIHT, organisation d'ateliers sur la production musicale, la configuration de logiciels DAW et la composition.")
-      ]
     }
   ],
   activities: [
@@ -107,8 +85,13 @@ window.DATA = {
       items: [
         {
           title: B("Piano & Viola (Conservatoire)", "Piano & Alto (Conservatoire)"),
-          text: B("Practicing piano for over 10 years and former viola student at the Conservatoire for 4 years. Music composition, film scoring, and home studio production.",
-                 "Pratique du piano depuis plus de 10 ans et ancien élève en alto au conservatoire pendant 4 ans. Composition, improvisation et MAO.")
+          text: B("Practicing piano for over 10 years and former viola student at the Conservatoire for 4 years.",
+                 "Pratique du piano depuis plus de 10 ans et ancien élève en alto au conservatoire pendant 4 ans.")
+        },
+        {
+          title: B("Music Band", "Groupe de musique"),
+          text: B("Playing music collectively in a band, sharing live performances and arrangements.",
+                 "Pratique musicale en groupe, partage de performances live et arrangements.")
         }
       ]
     },
@@ -116,14 +99,14 @@ window.DATA = {
       category: B("Sport", "Sport"),
       items: [
         {
-          title: B("Football (Regional Level)", "Football (Niveau Régional)"),
-          text: B("Competitive football player for 13 years at Toulouse Métropole (Regional level). Strong team spirit and endurance.",
-                 "Pratique en club depuis 13 ans au niveau Régional (Toulouse Métropole). Esprit d'équipe, détermination et goût de l'effort.")
+          title: B("Football (ASINP)", "Football (ASINP)"),
+          text: B("Playing football with the INP sports association (ASINP). Team spirit and regular matches.",
+                 "Pratique du football au sein de l'association sportive de l'INP (ASINP). Esprit d'équipe et matchs réguliers.")
         },
         {
-          title: B("Tennis & Fitness", "Tennis & Renforcement physique"),
-          text: B("Tennis in competitive setups for 3 years, combined with bodyweight training and swimming.",
-                 "Pratique du tennis en entraînement et compétition pendant 3 ans, complétée par la natation et le renforcement musculaire.")
+          title: B("Running", "Course à pied"),
+          text: B("Regular running sessions for endurance and conditioning.",
+                 "Séances régulières de course à pied pour l'endurance et le cardio.")
         }
       ]
     }
@@ -139,7 +122,7 @@ window.DATA = {
         text: B("Within the DMPE department at ONERA, I designed and developed a custom graphical desktop interface to centralize, query, and visualize laboratory materials data.",
                "Au sein du département DMPE de l'ONERA, j'ai conçu et développé une interface graphique sur mesure pour centraliser, consulter et visualiser les données matériaux du laboratoire."),
         bullets: [
-          B("Designed user-friendly GUI layouts using Qt Designer integrated with Python (PySide/PyQt).", "Conception d'interfaces ergomiques avec Qt Designer intégrées à Python (PySide/PyQt)."),
+          B("Designed user-friendly GUI layouts using Qt Designer integrated with Python (PySide/PyQt).", "Conception d'interfaces ergonomiques avec Qt Designer intégrées à Python (PySide/PyQt)."),
           B("Automated spreadsheet reading and queries using Pandas to process test records.", "Automatisation de la lecture et des requêtes de bases de données avec Pandas."),
           B("Accelerated data access for researchers conducting high-temperature material testing.", "Accélération de l'accès aux données pour les chercheurs analysant les matériaux à haute température.")
         ],
